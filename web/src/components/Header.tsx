@@ -6,8 +6,7 @@ interface HeaderProps {
   activeTab: 'bazi' | 'iching' | 'naming' | 'marriage' | 'calendar' | 'about';
   setActiveTab: (tab: 'bazi' | 'iching' | 'naming' | 'marriage' | 'calendar' | 'about') => void;
   onOpenDailySign: () => void;
-  onOpenVipModal: () => void;
-  lingShiCount: number;
+  onOpenConsultation: () => void;
   user: any;
   onOpenAuth: () => void;
   onOpenProfile: () => void;
@@ -17,8 +16,7 @@ export default function Header({
   activeTab,
   setActiveTab,
   onOpenDailySign,
-  onOpenVipModal,
-  lingShiCount,
+  onOpenConsultation,
   user,
   onOpenAuth,
   onOpenProfile
@@ -241,14 +239,35 @@ export default function Header({
           每日天机签
         </button>
 
+        {/* 核心引流：名家线下详批预约 */}
+        <button
+          onClick={onOpenConsultation}
+          className="btn-gold"
+          style={{
+            padding: '7px 16px',
+            fontSize: '13px',
+            boxShadow: '0 0 15px rgba(212, 175, 55, 0.35)',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          🍵 线下详批预约
+        </button>
+
         {/* 用户登录态 / 个人中心 */}
         {!user ? (
           <button
             onClick={onOpenAuth}
-            className="btn-gold"
-            style={{ padding: '7px 18px', fontSize: '13px' }}
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid var(--border-subtle)',
+              color: 'var(--text-secondary)',
+              padding: '6px 14px',
+              borderRadius: 'var(--radius-full)',
+              cursor: 'pointer',
+              fontSize: '12px'
+            }}
           >
-            ☯ 登录 / 注册
+            登录 / 归阁
           </button>
         ) : (
           <div
@@ -256,28 +275,21 @@ export default function Header({
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
+              gap: '8px',
               background: 'rgba(212, 175, 55, 0.08)',
               border: '1px solid var(--border-gold)',
-              padding: '5px 14px',
+              padding: '5px 12px',
               borderRadius: 'var(--radius-full)',
               cursor: 'pointer'
             }}
           >
-            <span style={{ fontSize: '16px' }}>{user.avatar || '☯️'}</span>
+            <span style={{ fontSize: '15px' }}>{user.avatar || '☯️'}</span>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1.2 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ fontSize: '12px', color: '#fff', fontWeight: 600 }}>
-                  {user.nickname}
-                </span>
-                {user.isVip && (
-                  <span style={{ fontSize: '9px', background: 'var(--gold-gradient)', color: '#100c02', padding: '1px 4px', borderRadius: '3px', fontWeight: 800 }}>
-                    VIP
-                  </span>
-                )}
-              </div>
-              <span style={{ fontSize: '11px', color: 'var(--gold-primary)' }}>
-                💎 {user.lingShi} 灵石
+              <span style={{ fontSize: '12px', color: '#fff', fontWeight: 600 }}>
+                {user.nickname}
+              </span>
+              <span style={{ fontSize: '10px', color: 'var(--text-gold)' }}>
+                我的测算档案
               </span>
             </div>
           </div>

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import DailySignModal from '../components/DailySignModal';
-import VipModal from '../components/VipModal';
+import ConsultationModal from '../components/ConsultationModal';
 import AuthModal from '../components/AuthModal';
 import UserProfileModal from '../components/UserProfileModal';
 import BaziForm from '../components/BaziForm';
@@ -20,7 +20,7 @@ import { BaziResult } from '../lib/bazi';
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'bazi' | 'iching' | 'naming' | 'marriage' | 'calendar' | 'about'>('bazi');
   const [isDailySignOpen, setIsDailySignOpen] = useState(false);
-  const [isVipOpen, setIsVipOpen] = useState(false);
+  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   
   // 用户系统状态
   const [user, setUser] = useState<any>(null);
@@ -161,8 +161,7 @@ export default function Home() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onOpenDailySign={() => setIsDailySignOpen(true)}
-        onOpenVipModal={() => setIsVipOpen(true)}
-        lingShiCount={lingShiCount}
+        onOpenConsultation={() => setIsConsultationOpen(true)}
         user={user}
         onOpenAuth={() => setIsAuthOpen(true)}
         onOpenProfile={() => setIsProfileOpen(true)}
@@ -250,8 +249,7 @@ export default function Home() {
             <div id="ai-report-anchor">
               <AiReportSection
                 baziData={baziResult}
-                lingShiCount={lingShiCount}
-                onDeductLingShi={handleDeductLingShi}
+                onOpenConsultation={() => setIsConsultationOpen(true)}
               />
             </div>
           </div>
@@ -298,11 +296,9 @@ export default function Home() {
 
       {/* 弹窗组件 */}
       <DailySignModal isOpen={isDailySignOpen} onClose={() => setIsDailySignOpen(false)} />
-      <VipModal
-        isOpen={isVipOpen}
-        onClose={() => setIsVipOpen(false)}
-        lingShiCount={lingShiCount}
-        onAddLingShi={handleAddLingShi}
+      <ConsultationModal
+        isOpen={isConsultationOpen}
+        onClose={() => setIsConsultationOpen(false)}
       />
       <AuthModal
         isOpen={isAuthOpen}
@@ -315,7 +311,7 @@ export default function Home() {
         user={user}
         token={token}
         onLogout={handleLogout}
-        onOpenRecharge={() => setIsVipOpen(true)}
+        onOpenConsultation={() => setIsConsultationOpen(true)}
       />
 
       {/* 底栏 */}

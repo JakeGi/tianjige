@@ -7,9 +7,6 @@ interface User {
   phone: string;
   nickname: string;
   avatar: string;
-  lingShi: number;
-  isVip: boolean;
-  vipExpireAt: string | null;
 }
 
 interface UserRecord {
@@ -17,7 +14,6 @@ interface UserRecord {
   type: string;
   title: string;
   content: string;
-  price: number;
   createdAt: string;
 }
 
@@ -27,7 +23,7 @@ interface UserProfileModalProps {
   user: User | null;
   token: string | null;
   onLogout: () => void;
-  onOpenRecharge: () => void;
+  onOpenConsultation: () => void;
 }
 
 export default function UserProfileModal({
@@ -36,9 +32,9 @@ export default function UserProfileModal({
   user,
   token,
   onLogout,
-  onOpenRecharge
+  onOpenConsultation
 }: UserProfileModalProps) {
-  const [activeTab, setActiveTab] = useState<'records' | 'vip'>('records');
+  const [activeTab, setActiveTab] = useState<'records' | 'consultation'>('records');
   const [records, setRecords] = useState<UserRecord[]>([]);
   const [isLoadingRecords, setIsLoadingRecords] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<UserRecord | null>(null);
@@ -128,49 +124,30 @@ export default function UserProfileModal({
                 <span style={{ fontSize: '18px', color: '#fff', fontWeight: 700, fontFamily: 'var(--font-serif)' }}>
                   {user.nickname}
                 </span>
-                {user.isVip ? (
-                  <span style={{
-                    fontSize: '11px',
-                    background: 'var(--gold-gradient)',
-                    color: '#1a1303',
-                    padding: '2px 8px',
-                    borderRadius: '4px',
-                    fontWeight: 800
-                  }}>
-                    👑 至尊VIP会员
-                  </span>
-                ) : (
-                  <span style={{
-                    fontSize: '11px',
-                    background: 'rgba(255, 255, 255, 0.08)',
-                    color: 'var(--text-muted)',
-                    padding: '2px 8px',
-                    borderRadius: '4px'
-                  }}>
-                    普通道友
-                  </span>
-                )}
+                <span style={{
+                  fontSize: '11px',
+                  background: 'rgba(212, 175, 55, 0.15)',
+                  color: 'var(--text-gold)',
+                  border: '1px solid var(--border-gold)',
+                  padding: '2px 8px',
+                  borderRadius: '4px'
+                }}>
+                  阁中道友
+                </span>
               </div>
               <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>
-                手机号：{user.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}
-                {user.isVip && ` · VIP到期日：${user.vipExpireAt}`}
+                绑定手机：{user.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')} · 测算档案永久云端留存
               </div>
             </div>
           </div>
 
-          {/* 灵石资产 */}
-          <div style={{
-            background: 'rgba(212, 175, 55, 0.08)',
-            border: '1px solid var(--border-gold)',
-            padding: '10px 18px',
-            borderRadius: 'var(--radius-sm)',
-            textAlign: 'right'
-          }}>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>灵石结余</div>
-            <div style={{ fontSize: '20px', color: 'var(--gold-primary)', fontWeight: 800 }}>
-              {user.lingShi} <span style={{ fontSize: '12px', fontWeight: 400 }}>灵石</span>
-            </div>
-          </div>
+          <button
+            onClick={() => { onClose(); onOpenConsultation(); }}
+            className="btn-gold"
+            style={{ padding: '8px 18px', fontSize: '13px' }}
+          >
+            🍵 预约名家线下详批
+          </button>
         </div>
 
         {/* 导航标签 */}
@@ -194,22 +171,22 @@ export default function UserProfileModal({
               cursor: 'pointer'
             }}
           >
-            📜 我的测算研报档案 ({records.filter(r => r.type === 'report').length})
+            📜 我的测算档案库 ({records.length})
           </button>
           <button
-            onClick={() => setActiveTab('vip')}
+            onClick={() => setActiveTab('consultation')}
             style={{
               padding: '14px 0',
               background: 'none',
               border: 'none',
-              borderBottom: activeTab === 'vip' ? '2px solid var(--gold-primary)' : '2px solid transparent',
-              color: activeTab === 'vip' ? 'var(--gold-primary)' : 'var(--text-secondary)',
+              borderBottom: activeTab === 'consultation' ? '2px solid var(--gold-primary)' : '2px solid transparent',
+              color: activeTab === 'consultation' ? 'var(--gold-primary)' : 'var(--text-secondary)',
               fontSize: '14px',
               fontWeight: 600,
               cursor: 'pointer'
             }}
           >
-            💎 灵石与 VIP 权益
+            🍵 线下道场与名家详批指引
           </button>
         </div>
 
@@ -226,7 +203,7 @@ export default function UserProfileModal({
                   <div style={{ fontSize: '32px', marginBottom: '10px' }}>📜</div>
                   <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>暂无测算研报记录</div>
                   <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>
-                    在排盘或起名后解锁研报，将自动永久保存在您的道友档案库中
+                    在排盘推演后生成研报，将自动永久保存在您的档案库中，方便日后随时查阅复核
                   </div>
                 </div>
               ) : (
@@ -251,7 +228,7 @@ export default function UserProfileModal({
                           {rec.title}
                         </div>
                         <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-                          归档时间：{new Date(rec.createdAt).toLocaleString()} · 终身永久可查
+                          归档时间：{new Date(rec.createdAt).toLocaleString()} · 永久云端保修
                         </div>
                       </div>
 
@@ -266,26 +243,26 @@ export default function UserProfileModal({
           ) : (
             <div>
               <div style={{
-                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(12, 17, 28, 0.8) 100%)',
+                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(12, 17, 28, 0.8) 100%)',
                 border: '1px solid var(--border-gold)',
                 borderRadius: 'var(--radius-sm)',
                 padding: '24px',
                 marginBottom: '20px'
               }}>
-                <div style={{ fontSize: '16px', color: '#fff', fontWeight: 700, fontFamily: 'var(--font-serif)', marginBottom: '8px' }}>
-                  👑 天机阁至尊研习会员特权
+                <div style={{ fontSize: '17px', color: '#fff', fontWeight: 700, fontFamily: 'var(--font-serif)', marginBottom: '8px' }}>
+                  🍵 天机阁 · 线下名家道场会面
                 </div>
                 <div style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
-                  <div>• 全年无限次推演四柱八字精微命盘</div>
-                  <div>• 每月免费赠阅 2 份天元大模型 3500 字深度研报（价值 700 元）</div>
-                  <div>• 获赠 2000 灵石，终生保修解盘档案</div>
+                  <div>• <strong>名家一对一闭门详推</strong>：由研习三命通会数十年之易学名家亲手勘验八字原局</div>
+                  <div>• <strong>茶道雅室清谈</strong>：一客一室，私密静谧，针对家庭关照、事业合伙与流年决策进行深谈</div>
+                  <div>• <strong>手书朱砂命盘留存</strong>：名家手书工整朱砂生辰底册，以备世代珍藏指引</div>
                 </div>
                 <button
-                  onClick={() => { onClose(); onOpenRecharge(); }}
+                  onClick={() => { onClose(); onOpenConsultation(); }}
                   className="btn-gold"
                   style={{ marginTop: '16px', padding: '10px 24px', fontSize: '14px' }}
                 >
-                  {user.isVip ? '续费至尊卡' : '立即开通至尊卡 (¥198/年)'}
+                  立即登记预约线下会面
                 </button>
               </div>
 
@@ -293,23 +270,24 @@ export default function UserProfileModal({
                 background: 'rgba(255, 255, 255, 0.02)',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: 'var(--radius-sm)',
-                padding: '20px'
+                padding: '16px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div>
-                    <div style={{ fontSize: '14px', color: '#fff', fontWeight: 600 }}>灵石快捷充值</div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
-                      当前结余 {user.lingShi} 灵石
-                    </div>
+                <div>
+                  <div style={{ fontSize: '14px', color: '#fff', fontWeight: 600 }}>天机阁堂主道长微信</div>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    微信号：TianjiGe2026（可在线咨询与安排档期）
                   </div>
-                  <button
-                    onClick={() => { onClose(); onOpenRecharge(); }}
-                    className="btn-outline-gold"
-                    style={{ padding: '8px 18px', fontSize: '13px' }}
-                  >
-                    充值灵石 →
-                  </button>
                 </div>
+                <button
+                  onClick={() => { onClose(); onOpenConsultation(); }}
+                  className="btn-outline-gold"
+                  style={{ padding: '6px 14px', fontSize: '12px' }}
+                >
+                  添加微信 →
+                </button>
               </div>
             </div>
           )}
@@ -362,7 +340,7 @@ export default function UserProfileModal({
             onClick={e => e.stopPropagation()}
             style={{
               width: '100%',
-              maxWidth: '620px',
+              maxWidth: '640px',
               maxHeight: '80vh',
               background: '#0d121f',
               border: '1px solid var(--border-gold)',
@@ -387,9 +365,24 @@ export default function UserProfileModal({
               lineHeight: 1.9,
               color: 'var(--text-secondary)',
               whiteSpace: 'pre-line',
-              fontFamily: 'var(--font-serif)'
+              fontFamily: 'var(--font-serif)',
+              marginBottom: '20px'
             }}>
               {selectedRecord.content}
+            </div>
+
+            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '16px', textAlign: 'right' }}>
+              <button
+                onClick={() => {
+                  setSelectedRecord(null);
+                  onClose();
+                  onOpenConsultation();
+                }}
+                className="btn-gold"
+                style={{ padding: '8px 20px', fontSize: '13px' }}
+              >
+                持此研报底稿 · 预约线下详批 →
+              </button>
             </div>
           </div>
         </div>
