@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap');
+
+:root {
+  --bg-dark: #07090f;
+  --bg-deep: #0b0f19;
+  --bg-surface: rgba(16, 23, 38, 0.8);
+  --bg-surface-elevated: rgba(24, 34, 54, 0.9);
+  --border-subtle: rgba(212, 175, 55, 0.18);
+  --border-gold: rgba(212, 175, 55, 0.45);
+  --border-gold-bright: #e6ca65;
+
+  --gold-primary: #e6ca65;
+  --gold-amber: #d4af37;
+  --gold-dark: #8c6f1d;
+  --gold-gradient: linear-gradient(135deg, #fce588 0%, #d4af37 60%, #997519 100%);
+  --gold-shimmer: linear-gradient(90deg, transparent, rgba(230, 202, 101, 0.25), transparent);
+
+  --cinnabar: #d94336; /* 朱砂红 */
+  --cinnabar-glow: rgba(217, 67, 54, 0.3);
+  --cyan-mist: #2da197; /* 苍青玉 */
+  --azure-glow: rgba(45, 161, 151, 0.25);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #8391a5;
+  --text-gold: #edd57a;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+
+  --shadow-gold: 0 10px 30px -10px rgba(212, 175, 55, 0.25);
+  --shadow-elevated: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+
+  --font-serif: 'Noto Serif SC', 'Songti SC', SimSun, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(35, 45, 75, 0.45) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 70%, rgba(45, 161, 151, 0.06) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* 典雅中式标题 */
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+  letter-spacing: 0.04em;
+}
+
+/* 金色渐变文字 */
+.text-gold-gradient {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* 玻璃拟态卡片 */
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+}
+
+/* 尊荣金色按钮 */
+.btn-gold {
+  background: var(--gold-gradient);
+  color: #171103;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  border: none;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(212, 175, 55, 0.55);
+  filter: brightness(1.08);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+/* 次要轮廓按钮 */
+.btn-outline-gold {
+  background: rgba(212, 175, 55, 0.06);
+  color: var(--text-gold);
+  border: 1px solid var(--border-gold);
+  font-family: var(--font-serif);
+  padding: 11px 26px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-outline-gold:hover {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: var(--border-gold-bright);
+  color: #fff;
+}
+
+/* 动效 */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.04); }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 50s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spinReverse 40s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+/* 隐藏滚动条但保留滚动 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ✦ 东方玄学高级动效体系 ✦ */
+
+/* 1. 朱砂金印盖章顿挫动效 */
+@keyframes sealStamp {
+  0% { opacity: 0; transform: scale(2.4) rotate(-15deg); filter: blur(5px); }
+  60% { opacity: 1; transform: scale(0.92) rotate(-2deg); filter: blur(0); }
+  85% { transform: scale(1.04) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.animate-seal {
+  animation: sealStamp 0.55s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+/* 2. 卡片渐进浮出动效 */
+@keyframes fadeUpIn {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUpIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 3. 铜钱三维立体抛掷翻转 */
+@keyframes coinToss {
+  0% { transform: translateY(0) rotateX(0deg) rotateY(0deg) scale(1); }
+  45% { transform: translateY(-46px) rotateX(720deg) rotateY(360deg) scale(1.18); box-shadow: 0 20px 30px rgba(212, 175, 55, 0.4); }
+  80% { transform: translateY(4px) rotateX(1080deg) rotateY(540deg) scale(0.94); }
+  100% { transform: translateY(0) rotateX(1080deg) rotateY(540deg) scale(1); }
+}
+.animate-coin-flip {
+  animation: coinToss 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 4. 玄金流光粒子横扫 */
+@keyframes goldSweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.gold-sweep-glow {
+  background: linear-gradient(90deg, rgba(212,175,55,0) 0%, rgba(252,229,136,0.3) 50%, rgba(212,175,55,0) 100%);
+  background-size: 200% 100%;
+  animation: goldSweep 3s infinite linear;
+}
+
+/* 5. 太极神光呼吸脉冲 */
+@keyframes mysticHalo {
+  0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.25), inset 0 0 10px rgba(212, 175, 55, 0.1); }
+  50% { box-shadow: 0 0 35px rgba(212, 175, 55, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.3); }
+}
+.animate-mystic-halo {
+  animation: mysticHalo 3.5s ease-in-out infinite;
+}
+
+/* 6. 五行能量条注入生长 */
+@keyframes barGrow {
+  from { width: 0%; opacity: 0.3; }
+  to { opacity: 1; }
+}
+.animate-bar-grow {
+  animation: barGrow 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

@@ -1,0 +1,37 @@
+# 依赖包
+node_modules/
+*/node_modules/
+
+# 构建产物
+.next/
+*/.next/
+out/
+build/
+dist/
+*/dist/
+
+# 运行期持久化测试数据
+server/data/
+
+# 环境变量与密钥文件（保留 example）
+.env
+.env.local
+.env.production
+.env*.local
+server/.env
+web/.env
+web/.env.local
+!.env.example
+!server/.env.example
+!web/.env.example
+
+# 日志与缓存
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.DS_Store
+*.pem
+*.tsbuildinfo
+.vercel/
